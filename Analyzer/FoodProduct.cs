@@ -3,16 +3,21 @@
     public abstract class FoodProduct
     {
         private string _name;
-        private DateTime _maxExpDate;
+        private DateTime _expDate;
+        private DateTime _productionDate;
+        private int _maxShelfLife;
+
 
         public string Name => _name;
-        public int DaysBeforeExpDate => (int)Math.Ceiling((_maxExpDate - DateTime.Now).TotalDays);
-        public DateTime MaxExpDate => _maxExpDate; 
+        public int DaysBeforeExpDate => (int)Math.Ceiling((_expDate - DateTime.Now).TotalDays);
+        public DateTime ExpDate => _expDate;
+        public int MaxShelfLife => (int)Math.Ceiling((_expDate - _productionDate).TotalDays);
 
-        public FoodProduct(string name, DateTime maxExpDate)
+        public FoodProduct(string name, DateTime ExpDate, DateTime productionDate)
         {
             _name = name;
-            _maxExpDate = maxExpDate;
+            _expDate = ExpDate;
+            _productionDate = productionDate;
         }
 
         public abstract double GetQuality();
