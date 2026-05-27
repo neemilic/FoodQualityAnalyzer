@@ -1,0 +1,46 @@
+[
+  {
+    "name": "Картошка",
+    "type": "Vegetable"
+  },
+  {
+    "name": "Банан",
+    "type": "Fruit"
+  },
+  {
+    "name": "Рыба",
+    "type": "Meat"
+  },
+  {
+    "name": "Трубочки с заварным кремом",
+    "type": "Bakery"
+  },
+  {
+    "name": "Чебурек",
+    "type": "Bakery"
+  },
+  {
+    "name": "Творожные колечки",
+    "type": "Bakery"
+  },
+  {
+    "name": "Лимон",
+    "type": "Fruit"
+  },
+  {
+    "name": "Виноград",
+    "type": "Fruit"
+  },
+  {
+    "name": "Томат",
+    "type": "Vegetable"
+  },
+  {
+    "name": "Хлебцы",
+    "type": "Bakery"
+  },
+  {
+    "name": "Маслянистые котлеты из курицы",
+    "type": "Meat"
+  }
+]

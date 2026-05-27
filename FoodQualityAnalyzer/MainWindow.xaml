@@ -7,7 +7,56 @@
         mc:Ignorable="d" 
         Title="MainWindow" Height="450" Width="800">
 
-    <Grid>
-        <Grid.RowDefinitions></Grid.RowDefinitions>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Группа выбора продуктов -->
+        <GroupBox Header="Выберите продукты" 
+                  Grid.Row="0" 
+                  Margin="0,0,0,10"
+                  Padding="5">
+            <ScrollViewer MaxHeight="450">
+                <StackPanel x:Name="ProductsPanel" Margin="5"/>
+            </ScrollViewer>
+        </GroupBox>
+
+        <!-- Кнопка "Показать качество" -->
+        <Button x:Name="ShowQualityButton" 
+                Grid.Row="1"
+                Content="Показать качество"
+                Height="40"
+                Margin="0,10"
+                FontSize="14"
+                IsEnabled="False"
+                Click="ShowQualityButton_Click">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="#4CAF50"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="#CCCCCC"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#45a049"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+
+        <!-- Информационная метка -->
+        <TextBlock x:Name="InfoLabel" 
+                   Grid.Row="2"
+                   Text="Выберите хотя бы один продукт для анализа качества"
+                   TextAlignment="Center"
+                   Foreground="#666666"
+                   FontSize="12"
+                   Margin="0,5"/>
     </Grid>
 </Window>
