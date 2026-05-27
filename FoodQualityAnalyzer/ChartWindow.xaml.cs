@@ -15,15 +15,27 @@ using System.Windows.Media;
 using Analyzer;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.ComponentModel;
 
 namespace FoodQualityAnalyzer
 {
     /// <summary>
     /// Логика взаимодействия для ChartWindow.xaml
     /// </summary>
-    public partial class ChartWindow : Window
+    public partial class ChartWindow : Window, INotifyPropertyChanged
     {
-        public PlotModel PlotModel { get; set; }
+        private PlotModel _plotModel;
+        public PlotModel PlotModel
+        {
+            get => _plotModel;
+            set
+            {
+                _plotModel= value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PlotModel)));
+            }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public ChartWindow(List<FoodProduct> selectedProducts)
         {
             InitializeComponent();
