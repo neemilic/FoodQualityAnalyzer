@@ -30,7 +30,7 @@ namespace FoodQualityAnalyzer
             DataContext = this;
             BuildChart(selectedProducts);
         }
-
+        
         public void BuildChart(List<FoodProduct> selectedProducts)
         {
             PlotModel = new PlotModel { Title = "Оценка продуктов." };

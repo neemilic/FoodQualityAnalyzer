@@ -10,9 +10,9 @@ namespace Analyzer
         private bool _isOrganic;
         private bool _isFresh;
 
-        public string AnimalType;
-        public bool IsOrganic;
-        public bool IsFresh;
+        public string AnimalType => _animalType;
+        public bool IsOrganic => _isOrganic;
+        public bool IsFresh => _isFresh;
 
         public Meat(string name, DateTime expDate, DateTime productionDate, string animalType, bool isOrganic, bool isFresh)
            : base(name, expDate, productionDate)

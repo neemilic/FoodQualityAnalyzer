@@ -14,13 +14,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Analyzer;
 
 namespace FoodQualityAnalyzer
 {
 
     public partial class MainWindow : Window
     {
-        private List<Product> products;
+        private List<FoodProduct> products;
         private List<CheckBox> checkboxes;
 
         public MainWindow()
@@ -34,30 +35,52 @@ namespace FoodQualityAnalyzer
         {
             try
             {
-        
                 var jsonPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "data.json");
                 string jsonContent = File.ReadAllText(jsonPath);
+
                 var options = new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true
                 };
 
-                products = JsonSerializer.Deserialize<List<Product>>(jsonContent, options);
+                // Шаг 1: читаем JSON в плоские DTO
+                var dtos = JsonSerializer.Deserialize<List<FoodProductDtocs>>(jsonContent, options);
+
+                // Шаг 2: преобразуем DTO в конкретные типы
+                products = dtos?.Select(MapToProduct).ToList() ?? new List<FoodProduct>();
             }
             catch (FileNotFoundException)
             {
                 MessageBox.Show("Файл data.json не найден!", "Ошибка",
-                              MessageBoxButton.OK, MessageBoxImage.Error);
+                                MessageBoxButton.OK, MessageBoxImage.Error);
                 Close();
-                //products = new List<Product>();
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка загрузки файла: {ex.Message}", "Ошибка",
-                              MessageBoxButton.OK, MessageBoxImage.Error);
-                products = new List<Product>();
+                                MessageBoxButton.OK, MessageBoxImage.Error);
                 Close();
             }
+        }
+
+        private FoodProduct MapToProduct(FoodProductDtocs dto)
+        {
+            return dto.Type switch
+            {
+                "Vegetable" => new Vegetable(
+            dto.Name,
+            dto.ExpDate,
+            dto.ProductionDate,
+            dto.IsRootVegetable,
+            dto.GrowingSeason),
+            "Fruit" => new Fruit( dto.Name, dto.ExpDate, dto.ProductionDate, dto.IsCitrus, dto.SugarContent),
+                "Meat" => new Meat(dto.Name, dto.ExpDate, dto.ProductionDate, dto.AnimalType, dto.IsOrganic, dto.IsFresh),
+                "Bakery" => new Backery(dto.Name, dto.ExpDate, dto.ProductionDate, dto.IsGlutenFree, dto.FatContent),
+
+
+                _ => throw new InvalidOperationException($"Неизвестный тип продукта: {dto.Type}"),
+
+            };
         }
 
         private void CreateProductCheckboxes()
@@ -104,7 +127,7 @@ namespace FoodQualityAnalyzer
         private void ShowQualityButton_Click(object sender, RoutedEventArgs e)
         {
             // Получаем выбранные продукты
-            var selectedProducts = new List<Product>();
+            var selectedProducts = new List<FoodProduct>();
 
             for (int i = 0; i < checkboxes.Count; i++)
             {
@@ -118,18 +141,13 @@ namespace FoodQualityAnalyzer
             string message = "Выбранные продукты:\n\n";
             foreach (var product in selectedProducts)
             {
-                message += $"• {product.Name} ({product.Type})\n";
+                message += $"• {product.Name} ()\n";
             }
 
-            MessageBox.Show(message, "Выбранные продукты",
-                          MessageBoxButton.OK, MessageBoxImage.Information);
+            var wnd = new ChartWindow(selectedProducts);
+            wnd.Show();
+
         }
     }
 
-    // Класс продукта
-    public class Product
-    {
-        public string Name { get; set; }
-        public string Type { get; set; }
-    }
 }

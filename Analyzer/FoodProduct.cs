@@ -7,10 +7,10 @@
         private DateTime _productionDate;
         private int _maxShelfLife;
 
-
         public string Name => _name;
         public int DaysBeforeExpDate => (int)Math.Ceiling((_expDate - DateTime.Now).TotalDays);
         public DateTime ExpDate => _expDate;
+        public DateTime ProductionDate { get; }
         public int MaxShelfLife => (int)Math.Ceiling((_expDate - _productionDate).TotalDays);
 
         public FoodProduct(string name, DateTime ExpDate, DateTime productionDate)
