@@ -1,39 +1,78 @@
 [
   {
     "name": "Картошка",
-    "type": "Vegetable"
+    "type": "Vegetable",
+    "expDate": "2026-06-10",
+    "productionDate": "2026-05-01",
+    "isRootVegetable": true,
+    "growingSeason": "Autumn"
   },
   {
     "name": "Банан",
-    "type": "Fruit"
+    "type": "Fruit",
+    "expDate": "2026-05-10",
+    "productionDate": "2026-05-01",
+    "isCitrus": false,
+    "sugarContent": 17
   },
   {
     "name": "Рыба",
-    "type": "Meat"
+    "type": "Meat",
+    "expDate": "2026-06-01",
+    "productionDate": "2026-04-01",
+    "isFresh": false,
+    "isOrganic": true
   },
   {
     "name": "Трубочки с заварным кремом",
-    "type": "Bakery"
+    "type": "Bakery",
+    "expDate": "2026-07-10",
+    "productionDate": "2026-05-28",
+    "fatContent": 70,
+    "isGlutenfree": true
   },
   {
     "name": "Чебурек",
-    "type": "Bakery"
+    "type": "Bakery",
+    "expDate": "2026-05-29",
+    "productionDate": "2026-05-01",
+    "fatContent": 60,
+    "isGlutenfree": false
+
   },
   {
     "name": "Творожные колечки",
-    "type": "Bakery"
+    "type": "Bakery",
+    "expDate": "2026-05-30",
+    "productionDate": "2026-05-28",
+    "isGlutenFree": false,
+    "fatContent": 10
+
   },
   {
     "name": "Лимон",
-    "type": "Fruit"
+    "type": "Fruit",
+    "expDate": "2026-06-10",
+    "productionDate": "2026-05-20",
+    "isTropical": false,
+    "sugarContent": 10
   },
   {
     "name": "Виноград",
-    "type": "Fruit"
+    "type": "Fruit",
+    "expDate": "2026-06-05",
+    "productionDate": "2026-05-25",
+    "isTropical": false,
+    "sugarContent": 45
+
   },
   {
     "name": "Томат",
-    "type": "Vegetable"
+    "type": "Vegetable",
+    "expDate": "2026-06-03",
+    "productionDate": "2026-05-24",
+    "isRootVegetable": false,
+    "growingSeason": "Summer"
   },
   {
     "name": "Хлебцы",
@@ -41,6 +80,10 @@
   },
   {
     "name": "Маслянистые котлеты из курицы",
-    "type": "Meat"
+    "type": "Meat",
+    "expDate": "2026-05-31",
+    "productionDate": "2026-05-27",
+    "isFresh": false,
+    "isOrganic": false
   }
 ]
