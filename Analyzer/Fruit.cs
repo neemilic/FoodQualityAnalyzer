@@ -38,7 +38,7 @@ namespace Analyzer
                 quality = 0.0;
                 return quality;
             }
-            if (!IsCitrus) quality += 0.2;
+            if (!IsCitrus) quality -= 0.2;
             if (SugarContent <= 10.0) quality -= 1.0;
 
             return Math.Clamp(Math.Round(quality, 1), 0.0, 10.0);
