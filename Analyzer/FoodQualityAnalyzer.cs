@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Analyzer
 {
-    internal class FoodQualityAnalyzer : ISpreadable
+    public partial class FoodQualityAnalyzer : ISpreadable
     {
         private FoodProduct[] _products;
         public FoodProduct[] Products => _products;
