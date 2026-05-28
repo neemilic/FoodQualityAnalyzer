@@ -25,11 +25,7 @@
   },
   {
     "name": "Трубочки с заварным кремом",
-    "type": "Bakery",
-    "expDate": "2026-07-10",
-    "productionDate": "2026-05-28",
-    "fatContent": 70,
-    "isGlutenfree": true
+    "type": "Bakery"
   },
   {
     "name": "Чебурек",
@@ -54,7 +50,7 @@
     "type": "Fruit",
     "expDate": "2026-06-10",
     "productionDate": "2026-05-20",
-    "isCitrus": true,
+    "isTropical": false,
     "sugarContent": 10
   },
   {
@@ -62,7 +58,7 @@
     "type": "Fruit",
     "expDate": "2026-06-05",
     "productionDate": "2026-05-25",
-    "isCitrus": false,
+    "isTropical": false,
     "sugarContent": 45
 
   },
