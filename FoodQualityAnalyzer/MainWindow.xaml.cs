@@ -74,7 +74,7 @@ namespace FoodQualityAnalyzer
             dto.IsRootVegetable,
             dto.GrowingSeason),
             "Fruit" => new Fruit( dto.Name, dto.ExpDate, dto.ProductionDate, dto.IsCitrus, dto.SugarContent),
-                "Meat" => new Meat(dto.Name, dto.ExpDate, dto.ProductionDate, dto.AnimalType, dto.IsOrganic, dto.IsFresh),
+                "Meat" => new Meat(dto.Name, dto.ExpDate, dto.ProductionDate, dto.IsOrganic, dto.IsFresh),
                 "Bakery" => new Backery(dto.Name, dto.ExpDate, dto.ProductionDate, dto.IsGlutenFree, dto.FatContent),
 
 

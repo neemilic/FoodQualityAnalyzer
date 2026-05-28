@@ -21,10 +21,27 @@ namespace Analyzer
 
         public override double GetQuality()
         {
-            double quality = (DaysBeforeExpDate / (double)MaxShelfLife) * 10.0;
-            if (IsGlutenFree) quality += 0.5;
-            if (FatContent > 20.0) quality -= 0.5;
-            else if (FatContent < 5.0) quality += 0.5;
+            double quality = 10.0;
+            if (DaysBeforeExpDate <= Math.Ceiling(MaxShelfLife / 2.0) && DaysBeforeExpDate > 3.0)
+            {
+                quality -= 0.5;
+            }
+            if (DaysBeforeExpDate == 3.0)
+            {
+                quality -= 2.0;
+            }
+            if (DaysBeforeExpDate == 1.0)
+            {
+                quality -= 3.0;
+            }
+            if (DaysBeforeExpDate <= 0.0)
+            {
+                quality = 0.0;
+                return quality;
+            }
+            if (!IsGlutenFree) quality -= 0.2;
+            if (FatContent > 20.0 && FatContent < 50.0) quality -= 1.0;
+            else if (FatContent >= 50.0) quality -= 3.0;
 
             return Math.Clamp(Math.Round(quality, 1), 0.0, 10.0);
         }

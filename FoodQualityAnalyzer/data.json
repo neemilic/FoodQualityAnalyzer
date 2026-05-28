@@ -1,19 +1,35 @@
 [
   {
     "name": "Картошка",
-    "type": "Vegetable"
+    "type": "Vegetable",
+    "expDate": "2026-06-10",
+    "productionDate": "2026-05-01",
+    "isRootVegetable": true,
+    "growingSeason": "Autumn"
   },
   {
     "name": "Банан",
-    "type": "Fruit"
+    "type": "Fruit",
+    "expDate": "2026-05-10",
+    "productionDate": "2026-05-01",
+    "isCitrus": false,
+    "sugarContent": 17
   },
   {
     "name": "Рыба",
-    "type": "Meat"
+    "type": "Meat",
+    "expDate": "2026-06-01",
+    "productionDate": "2026-04-01",
+    "isFresh": false,
+    "isOrganic": true
   },
   {
     "name": "Трубочки с заварным кремом",
-    "type": "Bakery"
+    "type": "Bakery",
+    "ExpDate": "2026-07-10",
+    "ProductionDate": "2026-05-28",
+    "FatContent": 70,
+    "IsGlutenfree": true
   },
   {
     "name": "Чебурек",
