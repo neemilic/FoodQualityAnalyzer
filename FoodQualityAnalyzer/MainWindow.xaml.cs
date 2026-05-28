@@ -1,20 +1,21 @@
-﻿using System;
+﻿using Analyzer;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Collections.Generic;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using Analyzer;
 
 namespace FoodQualityAnalyzer
 {
@@ -43,11 +44,10 @@ namespace FoodQualityAnalyzer
                     PropertyNameCaseInsensitive = true
                 };
 
-                // Шаг 1: читаем JSON в плоские DTO
                 var dtos = JsonSerializer.Deserialize<List<FoodProductDtocs>>(jsonContent, options);
 
-                // Шаг 2: преобразуем DTO в конкретные типы
                 products = dtos?.Select(MapToProduct).ToList() ?? new List<FoodProduct>();
+
             }
             catch (FileNotFoundException)
             {
@@ -61,6 +61,7 @@ namespace FoodQualityAnalyzer
                                 MessageBoxButton.OK, MessageBoxImage.Error);
                 Close();
             }
+
         }
 
         private FoodProduct MapToProduct(FoodProductDtocs dto)
@@ -106,13 +107,10 @@ namespace FoodQualityAnalyzer
 
         private void Checkbox_CheckedChanged(object sender, RoutedEventArgs e)
         {
-            // Проверяем, выбран ли хотя бы один продукт
             bool anySelected = checkboxes.Any(cb => cb.IsChecked == true);
 
-            // Активируем/деактивируем кнопку
             ShowQualityButton.IsEnabled = anySelected;
 
-            // Обновляем информационную метку
             if (anySelected)
             {
                 int selectedCount = checkboxes.Count(cb => cb.IsChecked == true);
@@ -126,7 +124,6 @@ namespace FoodQualityAnalyzer
 
         private void ShowQualityButton_Click(object sender, RoutedEventArgs e)
         {
-            // Получаем выбранные продукты
             var selectedProducts = new List<FoodProduct>();
 
             for (int i = 0; i < checkboxes.Count; i++)
@@ -137,7 +134,6 @@ namespace FoodQualityAnalyzer
                 }
             }
 
-            // Показываем сообщение с выбранными продуктами
             string message = "Выбранные продукты:\n\n";
             foreach (var product in selectedProducts)
             {
@@ -146,6 +142,46 @@ namespace FoodQualityAnalyzer
 
             var wnd = new ChartWindow(selectedProducts);
             wnd.Show();
+            SaveReport(BuildReport(selectedProducts));
+
+
+        }
+        public string BuildReport(List<FoodProduct> selected)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"Дата создания: {DateTime.Now:dd.MM.yyyy HH:mm}");
+            sb.AppendLine(new string('-', 40));
+
+            foreach (var product in selected)
+            {
+                sb.AppendLine($"Продукт:      {product.Name}");
+                sb.AppendLine($"Качество:     {product.GetQuality()}");
+                if (product.DaysBeforeExpDate >= 0) 
+                    sb.AppendLine($"До истечения: {product.DaysBeforeExpDate} дн.");
+                else sb.AppendLine($"До истечения: просрочено");
+
+                sb.AppendLine();
+            }
+
+            return sb.ToString();
+        }
+
+        private void SaveReport(string content)
+        {
+            string projectFolder = System.IO.Path.GetFullPath(
+            System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", ".."));
+
+            string folderPath = System.IO.Path.Combine(projectFolder, "Отчеты");
+            Directory.CreateDirectory(folderPath);
+
+            int number = Directory.GetFiles(folderPath, "Отчет_*.txt").Length + 1;
+            string date = DateTime.Now.ToString("dd-MM-yyyy");
+            string fileName = $"Отчет_{number}_от_{date}.txt";
+            string fullPath = System.IO.Path.Combine(folderPath, fileName);
+
+            File.WriteAllText(fullPath, content, Encoding.UTF8);
+
+            
 
         }
     }

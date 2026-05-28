@@ -15,6 +15,7 @@
     "isCitrus": false,
     "sugarContent": 17
   },
+
   {
     "name": "Рыба",
     "type": "Meat",
@@ -25,7 +26,11 @@
   },
   {
     "name": "Трубочки с заварным кремом",
-    "type": "Bakery"
+    "type": "Bakery",
+    "expDate": "2026-07-10",
+    "productionDate": "2026-05-28",
+    "fatContent": 70,
+    "isGlutenfree": true
   },
   {
     "name": "Чебурек",
@@ -50,7 +55,7 @@
     "type": "Fruit",
     "expDate": "2026-06-10",
     "productionDate": "2026-05-20",
-    "isTropical": false,
+    "isCitrus": true,
     "sugarContent": 10
   },
   {
@@ -58,7 +63,7 @@
     "type": "Fruit",
     "expDate": "2026-06-05",
     "productionDate": "2026-05-25",
-    "isTropical": false,
+    "isCitrus": false,
     "sugarContent": 45
 
   },
@@ -72,7 +77,11 @@
   },
   {
     "name": "Хлебцы",
-    "type": "Bakery"
+    "type": "Bakery",
+    "expDate": "2026-08-02",
+    "productionDate": "2026-05-28",
+    "isGlutenFree": true,
+    "fatContent": 5
   },
   {
     "name": "Маслянистые котлеты из курицы",
