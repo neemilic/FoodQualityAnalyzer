@@ -48,8 +48,7 @@ namespace FoodQualityAnalyzer
                 SugarContent = fruit.SugarContent;
             }
             if (obj is Meat meat)
-            {
-                AnimalType = meat.AnimalType;
+            { 
                 IsOrganic = meat.IsOrganic;
                 IsFresh = meat.IsFresh;
             }

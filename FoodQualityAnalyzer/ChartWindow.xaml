@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="ChartWindow" Height="450" Width="800">
     <Grid>
-        <oxy:PlotView Model="{Binding Model}" Width="600" Height="400"/>
+        <oxy:PlotView Model="{Binding PlotModel}" Width="600" Height="400"/>
     </Grid>
 </Window>
 

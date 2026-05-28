@@ -26,10 +26,17 @@
   {
     "name": "Трубочки с заварным кремом",
     "type": "Bakery",
+<<<<<<< HEAD
     "expDate": "2026-07-10",
     "productionDate": "2026-05-28",
     "fatContent": 70,
     "isGlutenfree": true
+=======
+    "ExpDate": "2026-07-10",
+    "ProductionDate": "2026-05-28",
+    "FatContent": 70,
+    "IsGlutenfree": true
+>>>>>>> 03c677035c0d67dce4282ae48e66fa0e6cd76eb7
   },
   {
     "name": "Чебурек",
