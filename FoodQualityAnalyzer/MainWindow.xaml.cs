@@ -114,12 +114,9 @@ namespace FoodQualityAnalyzer
             if (anySelected)
             {
                 int selectedCount = checkboxes.Count(cb => cb.IsChecked == true);
-                InfoLabel.Text = $"Выбрано продуктов: {selectedCount}. Нажмите 'Показать качество' для анализа.";
+                //InfoLabel.Text = $"Выбрано продуктов: {selectedCount}. Нажмите 'Показать качество' для анализа.";
             }
-            else
-            {
-                InfoLabel.Text = "Выберите хотя бы один продукт для анализа качества";
-            }
+
         }
 
         private void ShowQualityButton_Click(object sender, RoutedEventArgs e)
@@ -129,60 +126,67 @@ namespace FoodQualityAnalyzer
             for (int i = 0; i < checkboxes.Count; i++)
             {
                 if (checkboxes[i].IsChecked == true)
-                {
                     selectedProducts.Add(products[i]);
-                }
             }
 
-            string message = "Выбранные продукты:\n\n";
-            foreach (var product in selectedProducts)
+            try
             {
-                message += $"• {product.Name} ()\n";
+                var wnd = new ChartWindow(selectedProducts);
+                wnd.Show();
+                SaveReport(selectedProducts);
             }
-
-            var wnd = new ChartWindow(selectedProducts);
-            wnd.Show();
-            SaveReport(BuildReport(selectedProducts));
-
-
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}\n\n{ex.StackTrace}", "Ошибка");
+            }
         }
-        public string BuildReport(List<FoodProduct> selected)
+        private ReportSerializer _currentSerializer = new ReportJson();
+
+        private string GetReportsFolder() => System.IO.Path.GetFullPath(
+            System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "Отчеты"));
+
+        private void FormatComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var sb = new StringBuilder();
-            sb.AppendLine($"Дата создания: {DateTime.Now:dd.MM.yyyy HH:mm}");
-            sb.AppendLine(new string('-', 40));
+            if (_currentSerializer == null) return; // защита от срабатывания при инициализации
 
-            foreach (var product in selected)
-            {
-                sb.AppendLine($"Продукт:      {product.Name}");
-                sb.AppendLine($"Качество:     {product.GetQuality()}");
-                if (product.DaysBeforeExpDate >= 0) 
-                    sb.AppendLine($"До истечения: {product.DaysBeforeExpDate} дн.");
-                else sb.AppendLine($"До истечения: просрочено");
+            var selected = (FormatComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
 
-                sb.AppendLine();
-            }
+            ReportSerializer newSerializer = selected == "XML"
+                ? new ReportXml()
+                : new ReportJson();
 
-            return sb.ToString();
+            ConvertReports(_currentSerializer, newSerializer);
+            _currentSerializer = newSerializer;
         }
 
-        private void SaveReport(string content)
+        private void ConvertReports(ReportSerializer oldSerializer, ReportSerializer newSerializer)
         {
-            string projectFolder = System.IO.Path.GetFullPath(
-            System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", ".."));
+            string folder = GetReportsFolder();
+            if (!Directory.Exists(folder)) return;
 
-            string folderPath = System.IO.Path.Combine(projectFolder, "Отчеты");
-            Directory.CreateDirectory(folderPath);
+            var oldFiles = Directory.GetFiles(folder, $"Отчет_*{oldSerializer.GetExtension()}");
+            foreach (var oldFile in oldFiles)
+            {
+                var products = oldSerializer.Load(oldFile);
+                if (products == null) continue;
 
-            int number = Directory.GetFiles(folderPath, "Отчет_*.txt").Length + 1;
+                // Сохраняем в новый формат с тем же номером
+                string newFile = oldFile.Replace(oldSerializer.GetExtension(), newSerializer.GetExtension());
+                newSerializer.Save(products, newFile);
+            }
+        }
+
+        private void SaveReport(List<FoodProduct> selected)
+        {
+            string folder = GetReportsFolder();
+            Directory.CreateDirectory(folder);
+
+            int number = Directory.GetFiles(folder, $"Отчет_*{_currentSerializer.GetExtension()}").Length + 1;
             string date = DateTime.Now.ToString("dd-MM-yyyy");
-            string fileName = $"Отчет_{number}_от_{date}.txt";
-            string fullPath = System.IO.Path.Combine(folderPath, fileName);
+            string fileName = $"Отчет_{number}_от_{date}{_currentSerializer.GetExtension()}";
+            string fullPath = System.IO.Path.Combine(folder, fileName);
 
-            File.WriteAllText(fullPath, content, Encoding.UTF8);
-
-            
-
+            _currentSerializer.Save(selected, fullPath);
         }
     }
 

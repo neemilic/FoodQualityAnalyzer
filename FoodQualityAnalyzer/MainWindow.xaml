@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FoodQualityAnalyzer"
         mc:Ignorable="d" 
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="550" Width="800">
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -23,10 +23,19 @@
                 <StackPanel x:Name="ProductsPanel" Margin="5"/>
             </ScrollViewer>
         </GroupBox>
-
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,5">
+            <TextBlock Text="Формат отчёта:" VerticalAlignment="Center" Margin="0,0,10,0" FontSize="13"/>
+            <ComboBox x:Name="FormatComboBox"
+                      Width="120"
+                      FontSize="13"
+                      SelectionChanged="FormatComboBox_SelectionChanged">
+                <ComboBoxItem Content="JSON" IsSelected="True"/>
+                <ComboBoxItem Content="XML"/>
+            </ComboBox>
+        </StackPanel>
         <!-- Кнопка "Показать качество" -->
         <Button x:Name="ShowQualityButton" 
-                Grid.Row="1"
+                Grid.Row="2"
                 Content="Показать качество"
                 Height="40"
                 Margin="0,10"
@@ -51,12 +60,6 @@
         </Button>
 
         <!-- Информационная метка -->
-        <TextBlock x:Name="InfoLabel" 
-                   Grid.Row="2"
-                   Text="Выберите хотя бы один продукт для анализа качества"
-                   TextAlignment="Center"
-                   Foreground="#666666"
-                   FontSize="12"
-                   Margin="0,5"/>
+
     </Grid>
 </Window>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Analyzer
 {
-    public class FoodQualityAnalyzer
-    {
-    }
+    //public class FoodQualityAnalyzer
+    //{
+    //}
 }
